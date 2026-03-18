@@ -1,4 +1,4 @@
-# 📊 Análisis de Mercado Energético — Colombia
+# 📊 Análisis de Mercado Energético — Colombia 
 
 Reporte de Business Intelligence desarrollado en **Power BI** para el análisis del mercado eléctrico colombiano. Cubre demanda energética por departamento y tipo de mercado (Regulado / No Regulado), precios por Operador Regional, y análisis estratégico de oportunidades comerciales.
 
