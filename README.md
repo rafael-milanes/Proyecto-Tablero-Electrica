@@ -199,4 +199,4 @@ Flujo de trabajo:
 ## 👤 Autor
 
 **Rafael Milanes**
-[LinkedIn](https://www.linkedin.com/in/ingenierorafaelmilanes) | [GitHub](https://github.com/Rafael-Milanes)
+[LinkedIn]([https://www.linkedin.com/in/ingenierorafaelmilanes](https://www.linkedin.com/in/rafael-alberto-milanes-hernandez/)) | [GitHub](https://github.com/Rafael-Milanes)
