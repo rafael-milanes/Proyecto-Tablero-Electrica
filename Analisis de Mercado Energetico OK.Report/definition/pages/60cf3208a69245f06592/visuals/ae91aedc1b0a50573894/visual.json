@@ -39,7 +39,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "Total Demanda No Regulado"
@@ -53,7 +53,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "Total Demanda Regulado"

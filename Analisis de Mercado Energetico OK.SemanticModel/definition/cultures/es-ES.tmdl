@@ -1612,7 +1612,7 @@ cultureInfo es-ES
 			    "entity__medida": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas"
+			          "ConceptualEntity": "_Medidas_2"
 			        }
 			      },
 			      "State": "Generated",
@@ -1627,7 +1627,7 @@ cultureInfo es-ES
 			    "entity__medida.placeholder": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Placeholder"
 			        }
 			      },
@@ -1643,7 +1643,7 @@ cultureInfo es-ES
 			    "entity__medida.total_demanda_GWh": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Total Demanda GWh"
 			        }
 			      },
@@ -1679,7 +1679,7 @@ cultureInfo es-ES
 			    "entity__medida.total_demanda_no_regulado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Total Demanda No Regulado"
 			        }
 			      },
@@ -1725,7 +1725,7 @@ cultureInfo es-ES
 			    "entity__medida.total_demanda_regulado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Total Demanda Regulado"
 			        }
 			      },
@@ -1761,7 +1761,7 @@ cultureInfo es-ES
 			    "entity__medida.regulado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "% Regulado"
 			        }
 			      },
@@ -1797,7 +1797,7 @@ cultureInfo es-ES
 			    "entity__medida.conteo_departamentos": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Conteo Departamentos"
 			        }
 			      },
@@ -1813,7 +1813,7 @@ cultureInfo es-ES
 			    "entity__medida.promedio_diario_demanda_GWh": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Promedio Diario Demanda GWh"
 			        }
 			      },
@@ -1829,7 +1829,7 @@ cultureInfo es-ES
 			    "entity__medida.promedio_diario_NR": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Promedio Diario NR"
 			        }
 			      },
@@ -1845,7 +1845,7 @@ cultureInfo es-ES
 			    "entity__medida.promedio_diario_RG": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Promedio Diario RG"
 			        }
 			      },
@@ -1861,7 +1861,7 @@ cultureInfo es-ES
 			    "entity__medida.demanda_máxima_mensual": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Demanda Máxima Mensual"
 			        }
 			      },
@@ -1877,7 +1877,7 @@ cultureInfo es-ES
 			    "entity__medida.demanda_mínima_mensual": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Demanda Mínima Mensual"
 			        }
 			      },
@@ -1893,7 +1893,7 @@ cultureInfo es-ES
 			    "entity__medida.variación_domingo_vs_semana": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Variación Domingo vs Semana"
 			        }
 			      },
@@ -1909,7 +1909,7 @@ cultureInfo es-ES
 			    "entity__medida.participación_departamento": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Participación Departamento"
 			        }
 			      },
@@ -1925,7 +1925,7 @@ cultureInfo es-ES
 			    "entity__medida.ranking_departamento_demanda": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Ranking Departamento Demanda"
 			        }
 			      },
@@ -1941,7 +1941,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_promedio_COP_kWh": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Promedio COP/kWh"
 			        }
 			      },
@@ -1975,7 +1975,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_máximo": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Máximo"
 			        }
 			      },
@@ -1991,7 +1991,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_mínimo": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Mínimo"
 			        }
 			      },
@@ -2007,7 +2007,7 @@ cultureInfo es-ES
 			    "entity__medida.rango_de_precio": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Rango de Precio"
 			        }
 			      },
@@ -2023,7 +2023,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_promedio": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Promedio"
 			        }
 			      },
@@ -2039,7 +2039,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_max_2024": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Max 2024"
 			        }
 			      },
@@ -2065,7 +2065,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_min_2024": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Min 2024"
 			        }
 			      },
@@ -2091,7 +2091,7 @@ cultureInfo es-ES
 			    "entity__medida.ranking_OR_precio": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Ranking OR Precio"
 			        }
 			      },
@@ -2225,7 +2225,7 @@ cultureInfo es-ES
 			    "entity__medida.diferencial_vs_antioquia": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Diferencial vs Antioquia"
 			        }
 			      },
@@ -2241,7 +2241,7 @@ cultureInfo es-ES
 			    "entity__medida.variación_precio_vs_inicio": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Variación Precio vs Inicio"
 			        }
 			      },
@@ -2257,7 +2257,7 @@ cultureInfo es-ES
 			    "entity__medida.top_5_concentración_": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Top 5 Concentración %"
 			        }
 			      },
@@ -2353,7 +2353,7 @@ cultureInfo es-ES
 			    "entity__medida.demanda_regulado_bogotá": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Demanda Regulado Bogotá"
 			        }
 			      },
@@ -2369,7 +2369,7 @@ cultureInfo es-ES
 			    "entity__medida.potencial_migración_bogotá_": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Potencial Migración Bogotá %"
 			        }
 			      },
@@ -2405,7 +2405,7 @@ cultureInfo es-ES
 			    "entity__medida.diferencial_bogotá_vs_antioquia_": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Diferencial Bogotá vs Antioquia $"
 			        }
 			      },
@@ -2431,7 +2431,7 @@ cultureInfo es-ES
 			    "entity__medida.diferencial_bogotá_vs_antioquia_1": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Diferencial Bogotá vs Antioquia %"
 			        }
 			      },
@@ -2467,7 +2467,7 @@ cultureInfo es-ES
 			    "entity__medida.clasificación_NR_departamento": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Clasificación NR Departamento"
 			        }
 			      },
@@ -2483,7 +2483,7 @@ cultureInfo es-ES
 			    "entity__medida.tier_mercado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Tier Mercado"
 			        }
 			      },
@@ -2505,7 +2505,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_promedio_bogotá_2024": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Promedio Bogotá 2024"
 			        }
 			      },
@@ -2521,7 +2521,7 @@ cultureInfo es-ES
 			    "entity__medida.precio_promedio_antioquia_2024": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Precio Promedio Antioquia 2024"
 			        }
 			      },
@@ -2537,7 +2537,7 @@ cultureInfo es-ES
 			    "entity__medida.volatilidad_precio_2024": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Volatilidad Precio 2024"
 			        }
 			      },
@@ -2795,7 +2795,7 @@ cultureInfo es-ES
 			    "entity__medida.HTML_insights_bar": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "HTML Insights Bar"
 			        }
 			      },
@@ -2917,7 +2917,7 @@ cultureInfo es-ES
 			    "entity__medida.param_padding_h": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Param Padding H"
 			        }
 			      },
@@ -2933,7 +2933,7 @@ cultureInfo es-ES
 			    "entity__medida.param_padding_v": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Param Padding V"
 			        }
 			      },
@@ -3049,7 +3049,7 @@ cultureInfo es-ES
 			    "entity__medida.param_emoji_px": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Param Emoji px"
 			        }
 			      },
@@ -3065,7 +3065,7 @@ cultureInfo es-ES
 			    "entity__medida.param_subtitulo_px": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Param Subtitulo px"
 			        }
 			      },
@@ -3081,7 +3081,7 @@ cultureInfo es-ES
 			    "entity__medida.param_valor_px": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Param Valor px"
 			        }
 			      },
@@ -3097,7 +3097,7 @@ cultureInfo es-ES
 			    "entity__medida.param_titulo_px": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "Param Titulo px"
 			        }
 			      },
@@ -3113,7 +3113,7 @@ cultureInfo es-ES
 			    "entity__medida.HTML_card_líder_demanda": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "HTML Card Líder Demanda"
 			        }
 			      },
@@ -3129,7 +3129,7 @@ cultureInfo es-ES
 			    "entity__medida.HTML_card_bogotá_tarifa": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "HTML Card Bogotá Tarifa"
 			        }
 			      },
@@ -3145,7 +3145,7 @@ cultureInfo es-ES
 			    "entity__medida.HTML_card_regulado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "HTML Card Regulado"
 			        }
 			      },
@@ -3161,7 +3161,7 @@ cultureInfo es-ES
 			    "entity__medida.HTML_card_no_regulado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "HTML Card No Regulado"
 			        }
 			      },
@@ -3187,7 +3187,7 @@ cultureInfo es-ES
 			    "entity__medida.HTML_card_demanda_total": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "HTML Card Demanda Total"
 			        }
 			      },
@@ -3223,7 +3223,7 @@ cultureInfo es-ES
 			    "entity__medida.no_regulado": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "_Medidas",
+			          "ConceptualEntity": "_Medidas_2",
 			          "ConceptualProperty": "% No Regulado"
 			        }
 			      },
@@ -3771,7 +3771,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_param_titulo_px": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -3804,7 +3804,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_param_valor_px": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -3837,7 +3837,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_param_subtitulo_px": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -3870,7 +3870,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_param_emoji_px": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -3903,7 +3903,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_param_padding_v": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -3936,7 +3936,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_param_padding_h": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -4596,7 +4596,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_ranking_OR_precio": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -4860,7 +4860,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_ranking_departamento_demanda": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {
@@ -5355,7 +5355,7 @@ cultureInfo es-ES
 			    },
 			    "entity__medida_has_placeholder": {
 			      "Binding": {
-			        "ConceptualEntity": "_Medidas"
+			        "ConceptualEntity": "_Medidas_2"
 			      },
 			      "State": "Generated",
 			      "Roles": {

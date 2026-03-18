@@ -20,7 +20,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "HTML Estrategia Top"

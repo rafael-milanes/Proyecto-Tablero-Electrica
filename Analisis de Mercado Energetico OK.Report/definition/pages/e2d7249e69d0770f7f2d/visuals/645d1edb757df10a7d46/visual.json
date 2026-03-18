@@ -39,7 +39,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "Total Demanda GWh"
@@ -58,7 +58,7 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Medidas"
+                    "Entity": "_Medidas_2"
                   }
                 },
                 "Property": "Total Demanda GWh"

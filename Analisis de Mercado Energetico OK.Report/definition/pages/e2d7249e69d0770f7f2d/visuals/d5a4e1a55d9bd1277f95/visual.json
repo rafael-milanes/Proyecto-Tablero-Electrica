@@ -63,7 +63,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "Precio Promedio"
@@ -77,7 +77,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "Precio Promedio PY"

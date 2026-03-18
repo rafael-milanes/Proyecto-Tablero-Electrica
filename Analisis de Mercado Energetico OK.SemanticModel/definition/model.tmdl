@@ -23,7 +23,7 @@ annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
 ref table Fact_Demanda
 ref table Fact_Precios
 ref table Dim_Calendar
-ref table _Medidas
+ref table _Medidas_2
 ref table Dim_Departamento
 
 ref cultureInfo es-ES

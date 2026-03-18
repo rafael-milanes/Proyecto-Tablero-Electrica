@@ -1,5 +1,5 @@
 /// Tabla contenedora de todas las medidas DAX del modelo
-table _Medidas
+table _Medidas_2
 	isHidden
 	lineageTag: 9eb9dd89-d5ec-4922-b775-62ec81079b8f
 
@@ -643,7 +643,7 @@ table _Medidas
 		isNameInferred
 		sourceColumn: [Placeholder]
 
-	partition _Medidas = calculated
+	partition _Medidas_2 = calculated
 		mode: import
 		source = ROW("Placeholder", 0)
 

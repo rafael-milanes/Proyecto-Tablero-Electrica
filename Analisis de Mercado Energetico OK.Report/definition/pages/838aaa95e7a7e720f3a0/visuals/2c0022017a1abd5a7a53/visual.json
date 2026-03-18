@@ -57,7 +57,7 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "_Medidas_2"
                     }
                   },
                   "Property": "Precio Promedio COP/kWh"
