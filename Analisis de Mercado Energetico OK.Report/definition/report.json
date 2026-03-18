@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.0.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY25SU11",
+      "reportVersionAtImport": {
+        "visual": "2.4.0",
+        "report": "3.0.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "htmlContent443BE3AD55E043BF878BED274D3A6855"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY25SU11",
+          "path": "BaseThemes/CY25SU11.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Template4_-_Dashboard_1_(5)09061122811874911.svg",
+          "path": "Template4_-_Dashboard_1_(5)09061122811874911.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Template4_-_Dashboard_2_(1)0464842905674242.svg",
+          "path": "Template4_-_Dashboard_2_(1)0464842905674242.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Template4_-_Dashboard_334707302569287946.svg",
+          "path": "Template4_-_Dashboard_334707302569287946.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Template4_-_Dashboard_44483988120586295.svg",
+          "path": "Template4_-_Dashboard_44483988120586295.svg",
+          "type": "Image"
+        },
+        {
+          "name": "ChatGPT_Image_4_mar_2026,_12_22915041171091225.png",
+          "path": "ChatGPT_Image_4_mar_2026,_12_22915041171091225.png",
+          "type": "Image"
+        },
+        {
+          "name": "PL-30036527210757035644.png",
+          "path": "PL-30036527210757035644.png",
+          "type": "Image"
+        },
+        {
+          "name": "DP-6008794796820317456.png",
+          "path": "DP-6008794796820317456.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Analisis de Mercado Energetico OK"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d052dcc8-0f14-4769-9266-027270da2f28"
+  }
+}

@@ -1,0 +1,249 @@
+table Dim_Calendar
+	lineageTag: 46e4fe23-27c9-4228-acaf-f6af6e6b17af
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 088a35d4-2a62-4d18-9ce8-3904b7eb4dde
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: string
+		lineageTag: 40194d06-1284-4c02-adbb-347c5333b7f7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		formatString: 0
+		lineageTag: 1a6fbc69-f3aa-46bd-848f-13319c94bf94
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Month Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Short Name'
+		lineageTag: 845674f5-f35a-43f6-a1ab-6f8bfd7092c6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Short Name]
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Full Name'
+		lineageTag: 069c9473-07b6-4c42-b5a8-d3d371c8e116
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Full Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trimestre Number'
+		formatString: 0
+		lineageTag: 8525ea0e-d898-45c4-a049-04e919245fdb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Trimestre Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trimestre Name'
+		lineageTag: 62ef28c3-2145-45b9-9352-bbf7fed7fc4f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trimestre & Year'
+		lineageTag: 5bd60933-c19e-4a53-894f-f01a0865bbc5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre & Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semester Number'
+		formatString: 0
+		lineageTag: 14c7ce1e-7d9b-4dbd-94d1-94098ca1bd6e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Semester Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semester Name'
+		lineageTag: 7d3bc332-e97b-4f3f-a0c8-d75eb70a7c3e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Semester Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semester & Year'
+		lineageTag: adff7d21-177a-4751-87ff-248d39c41d53
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Semester & Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Number'
+		formatString: 0
+		lineageTag: 7e60a33e-36d7-4bc6-b92f-563a25c0c911
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Week Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Name'
+		lineageTag: 9f71da1c-358b-4755-a596-5a62f28218cd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		formatString: 0
+		lineageTag: c63af493-ceef-4a87-9d0b-b732d8d77039
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		lineageTag: bcc66fa5-f79f-4f98-9938-3a996354b500
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day Name]
+		sortByColumn: 'Day Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month & Year'
+		lineageTag: b1d0968e-9fbc-4a6a-adc1-a2a2eb83c9af
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month & Year]
+		sortByColumn: 'YearMonth Key'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quarter & Year Short'
+		lineageTag: 63600cd8-e589-438a-8e3e-bb97dd7adae6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter & Year Short]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'YearMonth Key'
+		formatString: 0
+		lineageTag: b3568392-f002-4a2c-8c1f-5c0f98c6aede
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [YearMonth Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'YearWeek Key'
+		formatString: 0
+		lineageTag: c49a5624-c04f-434c-aaf3-bde63bed847b
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [YearWeek Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'YearQuarter Key'
+		formatString: 0
+		lineageTag: 42222199-90de-470b-bed4-bb087d958e15
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [YearQuarter Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'YearSemester Key'
+		formatString: 0
+		lineageTag: c8c42442-5dd0-44a3-85d5-a1834170397a
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [YearSemester Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número de día de la semana (1=Lunes, 7=Domingo) para ordenar Day Name
+	column 'Day Number' = WEEKDAY(Dim_Calendar[Date], 2)
+		dataType: int64
+		formatString: 0
+		lineageTag: 3cd8c95c-296a-44da-8d66-b3e2a06c74ba
+		summarizeBy: none
+
+	partition Dim_Calendar = calculated
+		mode: import
+		source =
+				
+				VAR MinDate = MIN ( MIN ( Fact_Precios[Fecha] ), MIN ( Fact_Demanda[Fecha] ) )
+				VAR MaxDate = MAX ( MAX ( Fact_Precios[Fecha] ), MAX ( Fact_Demanda[Fecha] ) )
+				RETURN
+				ADDCOLUMNS (
+				    CALENDAR ( MinDate, MaxDate ),
+				
+				    // Año
+				    "Year", YEAR ( [Date] ),
+				
+				    // Mes
+				    "Month Number", MONTH ( [Date] ),
+				    "Month Short Name", FORMAT ( [Date], "MMM" ),
+				    "Month Full Name", FORMAT ( [Date], "MMMM" ),
+				
+				    // Trimestre
+				    "Trimestre Number", QUARTER ( [Date] ),
+				    "Trimestre Name", "T" & QUARTER ( [Date] ),
+				    "Trimestre & Year", "T" & QUARTER ( [Date] ) & " " & YEAR ( [Date] ),
+				
+				    // Semestre
+				    "Semester Number",
+				        VAR m = MONTH ( [Date] )
+				        RETURN IF ( m <= 6, 1, 2 ),
+				    "Semester Name",
+				        VAR m = MONTH ( [Date] )
+				        RETURN "S" & IF ( m <= 6, 1, 2 ),
+				    "Semester & Year",
+				        VAR m = MONTH ( [Date] )
+				        RETURN "S" & IF ( m <= 6, 1, 2 ) & " " & YEAR ( [Date] ),
+				
+				    // Semana
+				    "Week Number", WEEKNUM ( [Date], 2 ),
+				    "Week Name", "W" & FORMAT ( WEEKNUM ( [Date], 2 ), "00" ),
+				
+				    // Día
+				    "Day", DAY ( [Date] ),
+				    "Day Name", FORMAT ( [Date], "dddd" ),
+				
+				    // Combinaciones útiles
+				    "Month & Year", FORMAT ( [Date], "MMM yyyy" ),
+				    "Quarter & Year Short", FORMAT ( [Date], "\QQ yyyy" ),
+				
+				    // Claves de orden
+				    "YearMonth Key", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+				    "YearWeek Key", YEAR ( [Date] ) * 100 + WEEKNUM ( [Date], 2 ),
+				    "YearQuarter Key", YEAR ( [Date] ) * 10 + QUARTER ( [Date] ),
+				    "YearSemester Key", YEAR ( [Date] ) * 10 + IF ( MONTH ( [Date] ) <= 6, 1, 2 )
+				)
+
+	annotation PBI_Id = ef3d74f09e3844209c936d7ee372cdc8
+

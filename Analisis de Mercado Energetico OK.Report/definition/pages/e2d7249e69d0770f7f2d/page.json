@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "e2d7249e69d0770f7f2d",
+  "displayName": "Overview",
+  "displayOption": "FitToPage",
+  "height": 1200,
+  "width": 1920,
+  "objects": {
+    "displayArea": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Middle'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Template4 - Dashboard 1 (5).svg'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "Template4_-_Dashboard_1_(5)09061122811874911.svg"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Normal'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          },
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 0,
+                    "Percent": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "f5208f090437acea6f9d",
+      "target": "6d55acf013e53cc3f5be",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f5208f090437acea6f9d",
+      "target": "4bfe3d6bda627551a05b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f5208f090437acea6f9d",
+      "target": "c9579fb871e37fd9dda3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f5208f090437acea6f9d",
+      "target": "d5a4e1a55d9bd1277f95",
+      "type": "DataFilter"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+relationship bf8992b2-7089-fd27-0b73-f940d757f915
+	fromColumn: Fact_Demanda.Fecha
+	toColumn: Dim_Calendar.Date
+
+relationship 860c31c9-46e9-475f-9b9e-e7089e9963e7
+	fromColumn: Fact_Precios.Fecha
+	toColumn: Dim_Calendar.Date
+
+relationship Fact_Demanda_Departamento_Dim_Departamento_Departamento
+	fromColumn: Fact_Demanda.Departamento
+	toColumn: Dim_Departamento.Departamento
+
+relationship a5ba6fbc-8a8a-a7f9-51d7-608817283a98
+	fromColumn: Fact_Precios.Operador_Regional
+	toColumn: Dim_Departamento.Departamento
+

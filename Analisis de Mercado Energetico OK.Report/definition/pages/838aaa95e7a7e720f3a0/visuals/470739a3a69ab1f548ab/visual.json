@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "470739a3a69ab1f548ab",
+  "position": {
+    "x": 1110.9540636042402,
+    "y": 717.45583038869256,
+    "z": 13000,
+    "height": 279.85865724381625,
+    "width": 773.42756183745576,
+    "tabOrder": 14000
+  },
+  "visual": {
+    "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "HTML Volatilidad Precios"
+                }
+              },
+              "queryRef": "_Medidas.HTML Volatilidad Precios",
+              "nativeQueryRef": "HTML Volatilidad Precios"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

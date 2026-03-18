@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Analisis de Mercado Energetico OK"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6f4d0949-a1f7-48f3-a5a9-28e3c89de16f"
+  }
+}

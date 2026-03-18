@@ -1,0 +1,30 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Demanda
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Precios
+
+	annotation PBI_QueryGroupOrder = 1
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["NON REGULATED","REGULATED","Fact_Demanda","Fact_Precios","Dim_Departamento"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table Fact_Demanda
+ref table Fact_Precios
+ref table Dim_Calendar
+ref table _Medidas
+ref table Dim_Departamento
+
+ref cultureInfo es-ES
+

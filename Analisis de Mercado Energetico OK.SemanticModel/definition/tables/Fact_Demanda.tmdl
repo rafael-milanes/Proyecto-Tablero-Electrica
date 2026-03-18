@@ -1,0 +1,54 @@
+table Fact_Demanda
+	lineageTag: 4e409127-f124-4550-b0f6-f692bef9405f
+
+	column Fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ea93c1ff-c45e-4c76-9cc8-271a606ca87c
+		summarizeBy: none
+		sourceColumn: Fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Departamento
+		dataType: string
+		lineageTag: 9c320529-ad19-418c-8ded-60f2e534e202
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: Departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Demanda_GWh
+		dataType: double
+		lineageTag: 915344d6-46f6-4e2a-b98d-2795b90577f9
+		summarizeBy: sum
+		sourceColumn: Demanda_GWh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Tipo_Mercado
+		dataType: string
+		lineageTag: 236b773f-7bde-48ee-8085-d9d99e1202f2
+		summarizeBy: none
+		sourceColumn: Tipo_Mercado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Demanda = m
+		mode: import
+		queryGroup: Demanda
+		source =
+				let
+				    Origen = Table.Combine({#"NON REGULATED", REGULATED})
+				in
+				    Origen
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,86 @@
+table Dim_Departamento
+	lineageTag: 0da61cf1-961d-489f-bf92-45ebc46c19db
+
+	column Departamento
+		dataType: string
+		isKey
+		lineageTag: 76939d21-6207-4d3b-8780-0b735efe450a
+		summarizeBy: none
+		sourceColumn: Departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capital
+		dataType: string
+		lineageTag: c61dea98-7743-49f6-b739-dbd07bafe893
+		summarizeBy: none
+		sourceColumn: Capital
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitud
+		dataType: double
+		lineageTag: 602a5a9f-8cf1-4745-bec3-5617f513da66
+		dataCategory: Latitude
+		summarizeBy: sum
+		sourceColumn: Latitud
+
+		annotation SummarizationSetBy = Automatic
+
+	column Longitud
+		dataType: double
+		lineageTag: 9a373ac8-3adb-4ea7-8d1d-2a023b20a3e2
+		dataCategory: Longitude
+		summarizeBy: sum
+		sourceColumn: Longitud
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 6b13ba63-428f-4c07-b922-eb30963ef89c
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Departamento = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(
+				        {
+				            {"ANTIOQUIA", "Medellín", 6.2442, -75.5812, "Andina"},
+				            {"ARAUCA", "Arauca", 7.0847, -70.7588, "Orinoquía"},
+				            {"ATLÁNTICO", "Barranquilla", 10.9639, -74.7964, "Caribe"},
+				            {"BOGOTÁ. D.C.", "Bogotá", 4.7110, -74.0721, "Andina"},
+				            {"BOLÍVAR", "Cartagena", 10.3910, -75.5144, "Caribe"},
+				            {"BOYACÁ", "Tunja", 5.5353, -73.3678, "Andina"},
+				            {"CALDAS", "Manizales", 5.0689, -75.5174, "Andina"},
+				            {"CAQUETÁ", "Florencia", 1.6144, -75.6062, "Amazonía"},
+				            {"CASANARE", "Yopal", 5.3378, -72.3959, "Orinoquía"},
+				            {"CAUCA", "Popayán", 2.4419, -76.6064, "Pacífica"},
+				            {"CESAR", "Valledupar", 10.4631, -73.2532, "Caribe"},
+				            {"CHOCÓ", "Quibdó", 5.6947, -76.6611, "Pacífica"},
+				            {"CÓRDOBA", "Montería", 8.7479, -75.8814, "Caribe"},
+				            {"CUNDINAMARCA", "Bogotá", 4.9836, -74.0329, "Andina"},
+				            {"HUILA", "Neiva", 2.9273, -75.2819, "Andina"},
+				            {"LA GUAJIRA", "Riohacha", 11.5444, -72.9072, "Caribe"},
+				            {"MAGDALENA", "Santa Marta", 11.2408, -74.1990, "Caribe"},
+				            {"META", "Villavicencio", 4.1420, -73.6266, "Orinoquía"},
+				            {"NARIÑO", "Pasto", 1.2136, -77.2811, "Pacífica"},
+				            {"NORTE DE SANTANDER", "Cúcuta", 7.8891, -72.4967, "Andina"},
+				            {"PUTUMAYO", "Mocoa", 1.1492, -76.6519, "Amazonía"},
+				            {"QUINDÍO", "Armenia", 4.5339, -75.6811, "Andina"},
+				            {"RISARALDA", "Pereira", 4.8087, -75.6906, "Andina"},
+				            {"SANTANDER", "Bucaramanga", 7.1254, -73.1198, "Andina"},
+				            {"SUCRE", "Sincelejo", 9.3047, -75.3978, "Caribe"},
+				            {"TOLIMA", "Ibagué", 4.4389, -75.2322, "Andina"},
+				            {"VALLE DEL CAUCA", "Cali", 3.4516, -76.5320, "Pacífica"},
+				            {"GUAVIARE", "San José del Guaviare", 2.5686, -72.6394, "Amazonía"}
+				        },
+				        type table [Departamento = text, Capital = text, Latitud = number, Longitud = number, Region = text]
+				    )
+				in
+				    Source
+

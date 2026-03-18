@@ -1,0 +1,649 @@
+/// Tabla contenedora de todas las medidas DAX del modelo
+table _Medidas
+	isHidden
+	lineageTag: 9eb9dd89-d5ec-4922-b775-62ec81079b8f
+
+	/// Suma total de demanda en GWh
+	measure 'Total Demanda GWh' = SUM(Fact_Demanda[Demanda_GWh])
+		formatString: #,##0.0
+		displayFolder: 01. KPIs Ejecutivos
+		lineageTag: 979ab5c2-21a4-4985-8569-b715c17916cc
+
+	/// Demanda total del mercado No Regulado
+	measure 'Total Demanda No Regulado' = CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado] = "No Regulado")
+		formatString: #,##0.0
+		displayFolder: 01. KPIs Ejecutivos
+		lineageTag: d975863d-0ddf-4e80-9c09-86d28e1ea40b
+
+	/// Demanda total del mercado Regulado
+	measure 'Total Demanda Regulado' = CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado] = "Regulado")
+		formatString: #,##0.0
+		displayFolder: 01. KPIs Ejecutivos
+		lineageTag: 4941effd-87e0-41f1-add3-d8253c164043
+
+	/// Porcentaje de demanda Regulado sobre el total
+	measure '% Regulado' = DIVIDE([Total Demanda Regulado], [Total Demanda GWh], 0)
+		formatString: 0.0%
+		displayFolder: 01. KPIs Ejecutivos
+		lineageTag: 3ae1137c-e53b-4ea6-808e-0b22a9c65405
+
+	/// Número de departamentos únicos
+	measure 'Conteo Departamentos' = DISTINCTCOUNT(Fact_Demanda[Departamento])
+		formatString: #,##0
+		displayFolder: 01. KPIs Ejecutivos
+		lineageTag: 456a57c3-3546-41b3-80b1-6f08bce90f42
+
+	/// Promedio diario de demanda en GWh
+	measure 'Promedio Diario Demanda GWh' =
+			AVERAGEX(
+			    VALUES(Fact_Demanda[Fecha]),
+			    CALCULATE(SUM(Fact_Demanda[Demanda_GWh]))
+			)
+		formatString: #,##0.0
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: a4d333f0-512e-4b4a-bfeb-1593b05bcf9f
+
+	/// Promedio diario de demanda No Regulado
+	measure 'Promedio Diario NR' =
+			AVERAGEX(
+			    VALUES(Fact_Demanda[Fecha]),
+			    CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado] = "No Regulado")
+			)
+		formatString: #,##0.0
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: 24659615-8709-461e-b4c9-ae85c5491af9
+
+	/// Promedio diario de demanda Regulado
+	measure 'Promedio Diario RG' =
+			AVERAGEX(
+			    VALUES(Fact_Demanda[Fecha]),
+			    CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado] = "Regulado")
+			)
+		formatString: #,##0.0
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: d25d2229-8388-4853-b329-2cec75adfb52
+
+	/// Mes con mayor demanda total
+	measure 'Demanda Máxima Mensual' =
+			MAXX(
+			    SUMMARIZE(Fact_Demanda, Dim_Calendar[Month & Year]),
+			    [Total Demanda GWh]
+			)
+		formatString: #,##0.0
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: ed8e1c58-b147-4c3a-a07a-ec81f34c95b4
+
+	/// Mes con menor demanda total
+	measure 'Demanda Mínima Mensual' =
+			MINX(
+			    SUMMARIZE(Fact_Demanda, Dim_Calendar[Month & Year]),
+			    [Total Demanda GWh]
+			)
+		formatString: #,##0.0
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: 1386b623-d5ca-469c-a669-a979c1d6d969
+
+	/// % de caída de demanda los domingos vs días hábiles
+	measure 'Variación Domingo vs Semana' = ```
+			VAR _PromedioSemana = 
+			    AVERAGEX(
+			        FILTER(VALUES(Fact_Demanda[Fecha]), WEEKDAY(Fact_Demanda[Fecha], 2) <= 5),
+			        CALCULATE(SUM(Fact_Demanda[Demanda_GWh]))
+			    )
+			VAR _PromedioDomingo = 
+			    AVERAGEX(
+			        FILTER(VALUES(Fact_Demanda[Fecha]), WEEKDAY(Fact_Demanda[Fecha], 2) = 7),
+			        CALCULATE(SUM(Fact_Demanda[Demanda_GWh]))
+			    )
+			RETURN
+			    DIVIDE(_PromedioDomingo - _PromedioSemana, _PromedioSemana, 0)
+			```
+		formatString: 0.0%
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: 1d032f50-fe95-42e8-ade5-d704b805d5fb
+
+	/// % de participación del departamento en el total nacional
+	measure 'Participación Departamento' =
+			DIVIDE(
+			    [Total Demanda GWh],
+			    CALCULATE([Total Demanda GWh], ALL(Fact_Demanda[Departamento])),
+			    0
+			)
+		formatString: 0.0%
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: 7863c306-dedc-4d9d-960a-81da9d0edb08
+
+	/// Ranking del departamento por demanda total (1=mayor)
+	measure 'Ranking Departamento Demanda' =
+			IF(
+			    HASONEVALUE(Fact_Demanda[Departamento]),
+			    RANKX(
+			        ALL(Fact_Demanda[Departamento]),
+			        [Total Demanda GWh],,DESC,Dense
+			    )
+			)
+		formatString: #,##0
+		displayFolder: 02. Análisis de Demanda
+		lineageTag: d9893ad7-edb0-4d5e-8bca-732451dbac59
+
+	/// Precio promedio en COP/kWh
+	measure 'Precio Promedio COP/kWh' = AVERAGE(Fact_Precios[Precio_COP_kWh])
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 80f18f8a-038b-4f4b-9d33-c06a30d34b2b
+
+	/// Precio máximo registrado
+	measure 'Precio Máximo' = MAX(Fact_Precios[Precio_COP_kWh])
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: e73de601-7a32-4039-b92b-b677788f28c0
+
+	/// Precio mínimo registrado
+	measure 'Precio Mínimo' = MIN(Fact_Precios[Precio_COP_kWh])
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 003bea61-e298-442b-9d8a-e279152e0198
+
+	/// Diferencia entre precio máximo y mínimo (volatilidad)
+	measure 'Rango de Precio' = [Precio Máximo] - [Precio Mínimo]
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: c19b4528-aa4b-4e9a-b13d-8d5f4a3c0d5f
+
+	/// Precio promedio filtrado a 2024
+	measure 'Precio Promedio' =
+			CALCULATE(
+			    AVERAGE(Fact_Precios[Precio_COP_kWh])
+			)
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 902b8394-b03d-44d7-a46e-42fb615831b3
+
+	/// Precio máximo en 2024
+	measure 'Precio Max 2024' =
+			CALCULATE(
+			    MAX((Fact_Precios[Precio_COP_kWh])),
+			    Dim_Calendar[Year] = 2024
+			)
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 6cce2bcb-2aa8-45d1-bd02-68041adf5125
+
+	/// Precio mínimo en 2024
+	measure 'Precio Min 2024' =
+			CALCULATE(
+			    MIN(Fact_Precios[Precio_COP_kWh]),
+			    Dim_Calendar[Year] = 2024
+			)
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 45a6c922-8e09-4a71-914b-9ebd3521df6e
+
+	/// Ranking del OR por precio (1=más caro)
+	measure 'Ranking OR Precio' =
+			IF(
+			    HASONEVALUE(Fact_Precios[Operador_Regional]),
+			    RANKX(
+			        ALL(Fact_Precios[Operador_Regional]),
+			        [Precio Promedio],,DESC,Dense
+			    )
+			)
+		formatString: #,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 793f7f5a-bf31-4b67-9312-cd6ebd2806be
+
+	/// % de diferencia del OR actual vs Antioquia (el más barato)
+	measure 'Diferencial vs Antioquia' = ```
+			VAR _PrecioActual = [Precio Promedio]
+			VAR _PrecioAntioquia = 
+			    CALCULATE(
+			        AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			        Fact_Precios[Operador_Regional] = "antioquia",
+			        Dim_Calendar[Year] = 2024
+			    )
+			RETURN
+			    DIVIDE(_PrecioActual - _PrecioAntioquia, _PrecioAntioquia, 0)
+			```
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 03. Análisis de Precios
+		lineageTag: efdc3a20-fb53-461e-8049-dfa42ddfe44d
+
+	/// % variación del precio promedio 2024 vs agosto 2022 (inicio de serie)
+	measure 'Variación Precio vs Inicio' = ```
+			VAR _PrecioActual = [Precio Promedio]
+			VAR _PrecioInicio = 
+			    CALCULATE(
+			        AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			        Dim_Calendar[Year] = 2022,
+			        Dim_Calendar[Month Number] = 8
+			    )
+			RETURN
+			    DIVIDE(_PrecioActual - _PrecioInicio, _PrecioInicio, 0)
+			```
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 116bb6e7-fc85-445e-ae85-a2959976d62d
+
+	/// % de demanda concentrado en los 5 departamentos líderes
+	measure 'Top 5 Concentración %' = ```
+			VAR _Top5 = 
+			    TOPN(5, ALL(Fact_Demanda[Departamento]), [Total Demanda GWh], DESC)
+			VAR _DemandaTop5 = 
+			    CALCULATE([Total Demanda GWh], KEEPFILTERS(_Top5))
+			VAR _DemandaTotal = 
+			    CALCULATE([Total Demanda GWh], ALL(Fact_Demanda[Departamento]))
+			RETURN
+			    DIVIDE(_DemandaTop5, _DemandaTotal, 0)
+			```
+		formatString: 0.0%
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: ebf25260-4bf9-4cf8-ad9c-ca9c57944fb2
+
+	/// Demanda Regulada en Bogotá D.C. — potencial de migración
+	measure 'Demanda Regulado Bogotá' =
+			CALCULATE(
+			    SUM(Fact_Demanda[Demanda_GWh]),
+			    Fact_Demanda[Departamento] = "BOGOTÁ. D.C.",
+			    Fact_Demanda[Tipo_Mercado] = "Regulado"
+			)
+		formatString: #,##0.0
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: 536a5ba3-219d-4bd6-95da-36e2fae74024
+
+	/// % de demanda en Bogotá que es Regulada (potencialmente migrable)
+	measure 'Potencial Migración Bogotá %' = ```
+			VAR _RegBog = 
+			    CALCULATE(
+			        SUM(Fact_Demanda[Demanda_GWh]),
+			        Fact_Demanda[Departamento] = "BOGOTÁ. D.C.",
+			        Fact_Demanda[Tipo_Mercado] = "Regulado"
+			    )
+			VAR _TotalBog = 
+			    CALCULATE(
+			        SUM(Fact_Demanda[Demanda_GWh]),
+			        Fact_Demanda[Departamento] = "BOGOTÁ. D.C."
+			    )
+			RETURN
+			    DIVIDE(_RegBog, _TotalBog, 0)
+			```
+		formatString: 0.0%
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: 17fb4ba1-075c-40cf-bf2e-6c7eebf5757e
+
+	/// Diferencial absoluto en COP/kWh entre Bogotá y Antioquia
+	measure 'Diferencial Bogotá vs Antioquia $' = ```
+			VAR _Bog = 
+			    CALCULATE(
+			        AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			        Fact_Precios[Operador_Regional] = "bogota_cundinamarca",
+			        Dim_Calendar[Year] = 2024
+			    )
+			VAR _Ant = 
+			    CALCULATE(
+			        AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			        Fact_Precios[Operador_Regional] = "antioquia",
+			        Dim_Calendar[Year] = 2024
+			    )
+			RETURN
+			    _Bog - _Ant
+			```
+		formatString: $#,##0
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: 6903d297-373a-44f6-b9ae-b9d5aa84f316
+
+	/// % que Bogotá es más caro que Antioquia
+	measure 'Diferencial Bogotá vs Antioquia %' = ```
+			VAR _Bog = 
+			    CALCULATE(
+			        AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			        Fact_Precios[Operador_Regional] = "bogota_cundinamarca",
+			        Dim_Calendar[Year] = 2024
+			    )
+			VAR _Ant = 
+			    CALCULATE(
+			        AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			        Fact_Precios[Operador_Regional] = "antioquia",
+			        Dim_Calendar[Year] = 2024
+			    )
+			RETURN
+			    DIVIDE(_Bog - _Ant, _Ant, 0)
+			```
+		formatString: 0.0%
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: 14e9181a-7b29-4bd9-94b1-3299c657ec3f
+
+	/// Clasificación cualitativa del departamento según su % No Regulado
+	measure 'Clasificación NR Departamento' =
+			VAR _Pnr = [% No Regulado]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        _Pnr >= 0.95, "★ Alta concentración industrial",
+			        _Pnr >= 0.85, "● Mercado maduro",
+			        _Pnr >= 0.70, "◔ Oportunidad de migración",
+			        "○ Predominio regulado"
+			    )
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: 00b20814-b9ef-4fa1-a1ed-6e4f5b713fec
+
+	/// Clasificación estratégica del mercado por demanda y composición
+	measure 'Tier Mercado' =
+			VAR _Demanda = [Total Demanda GWh]
+			VAR _Pnr = [% No Regulado]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        _Demanda >= 2500 && _Pnr >= 0.85, "Tier 1 - Prioritario",
+			        _Demanda >= 1500 || (_Demanda >= 500 && _Pnr >= 0.90), "Tier 2 - Crecimiento",
+			        "Tier 3 - Monitoreo"
+			    )
+		displayFolder: 04. Estrategia y Oportunidades
+		lineageTag: cc5815b5-8c5d-4dfb-ab88-6d60ea8375c8
+
+	/// Precio promedio de Bogotá-Cundinamarca en 2024
+	measure 'Precio Promedio Bogotá 2024' =
+			CALCULATE(
+			    AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			    Fact_Precios[Operador_Regional] = "bogota_cundinamarca",
+			    Dim_Calendar[Year] = 2024
+			)
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 4dd0c4c4-586a-4651-b786-e13288dc2472
+
+	/// Precio promedio de Antioquia en 2024
+	measure 'Precio Promedio Antioquia 2024' =
+			CALCULATE(
+			    AVERAGE(Fact_Precios[Precio_COP_kWh]),
+			    Fact_Precios[Operador_Regional] = "antioquia",
+			    Dim_Calendar[Year] = 2024
+			)
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 3b67d1d0-50d3-4791-bcb7-d95273feb4a0
+
+	/// Rango de precio en 2024 (max - min)
+	measure 'Volatilidad Precio 2024' = CALCULATE([Precio Máximo], Dim_Calendar[Year] = 2024) - CALCULATE([Precio Mínimo], Dim_Calendar[Year] = 2024)
+		formatString: $#,##0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: bdbb352a-3ae9-4abb-8282-052df455e6e5
+
+	measure '% No Regulado' = DIVIDE([Total Demanda No Regulado], [Total Demanda GWh], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: 01. KPIs Ejecutivos
+		lineageTag: 377ac363-5459-47a9-9053-254e67342a2b
+
+	/// ⚡ Tarjeta HTML - Demanda Total con subtítulo
+	measure 'HTML Card Demanda Total' = ```
+			
+			VAR _val = FORMAT(SUM(Fact_Demanda[Demanda_GWh]), "#,##0")
+			VAR _nd = FORMAT([Conteo Departamentos], "0")
+			VAR _t = [Param Titulo px]
+			VAR _v = [Param Valor px]
+			VAR _s = [Param Subtitulo px]
+			VAR _e = [Param Emoji px]
+			VAR _pv = [Param Padding V]
+			VAR _ph = [Param Padding H]
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.c{font-family:Segoe UI,sans-serif;background:transparent;padding:" & _pv & "px " & _ph & "px}.tp{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.lb{font-size:" & _t & "px;color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.3px}.ic{font-size:" & _e & "px;opacity:.7;filter:grayscale(20%)}.vl{font-size:" & _v & "px;font-weight:800;color:#fff;letter-spacing:-.5px;margin:2px 0}.sn{font-size:" & _s & "px;color:rgba(255,255,255,.6);font-weight:700;margin-top:4px}</style><div class='c'><div class='tp'><div class='lb'>Demanda Total</div><div class='ic'>⚡</div></div><div class='vl'>" & _val & " GWh</div><div class='sn'>en 2024 · " & _nd & " departamentos</div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 9ac96ea2-930b-44b5-8dfc-e7754313adad
+
+	/// 🏭 Tarjeta HTML - No Regulado con subtítulo
+	measure 'HTML Card No Regulado' = ```
+			
+			VAR _pct = FORMAT([% No Regulado] * 100, "0.0")
+			VAR _gwh = FORMAT([Total Demanda No Regulado], "#,##0")
+			VAR _t = [Param Titulo px]
+			VAR _v = [Param Valor px]
+			VAR _s = [Param Subtitulo px]
+			VAR _e = [Param Emoji px]
+			VAR _pv = [Param Padding V]
+			VAR _ph = [Param Padding H]
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.c{font-family:Segoe UI,sans-serif;background:transparent;padding:" & _pv & "px " & _ph & "px}.tp{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.lb{font-size:" & _t & "px;color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.3px}.ic{font-size:" & _e & "px;opacity:.7;filter:grayscale(20%)}.vl{font-size:" & _v & "px;font-weight:800;color:#fff;letter-spacing:-.5px;margin:2px 0}.sn{font-size:" & _s & "px;color:rgba(255,255,255,.6);font-weight:700;margin-top:4px}</style><div class='c'><div class='tp'><div class='lb'>No Regulado</div><div class='ic'>🏭</div></div><div class='vl'>" & _pct & "%</div><div class='sn'>" & _gwh & " GWh</div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 7f4b1ac3-e44b-4beb-9d66-697a5af2dea0
+
+	/// 📊 Tarjeta HTML - Regulado con subtítulo
+	measure 'HTML Card Regulado' = ```
+			
+			VAR _pct = FORMAT([% Regulado] * 100, "0.0")
+			VAR _gwh = FORMAT([Total Demanda Regulado], "#,##0")
+			VAR _t = [Param Titulo px]
+			VAR _v = [Param Valor px]
+			VAR _s = [Param Subtitulo px]
+			VAR _e = [Param Emoji px]
+			VAR _pv = [Param Padding V]
+			VAR _ph = [Param Padding H]
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.c{font-family:Segoe UI,sans-serif;background:transparent;padding:" & _pv & "px " & _ph & "px}.tp{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.lb{font-size:" & _t & "px;color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.3px}.ic{font-size:" & _e & "px;opacity:.7;filter:grayscale(20%)}.vl{font-size:" & _v & "px;font-weight:800;color:#fff;letter-spacing:-.5px;margin:2px 0}.sn{font-size:" & _s & "px;color:rgba(255,255,255,.6);font-weight:700;margin-top:4px}</style><div class='c'><div class='tp'><div class='lb'>Regulado</div><div class='ic'>📊</div></div><div class='vl'>" & _pct & "%</div><div class='sn'>" & _gwh & " GWh</div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 8b96958d-6245-4ff9-acfe-11787595664a
+
+	/// 💰 Tarjeta HTML - Bogotá Tarifa con subtítulo
+	measure 'HTML Card Bogotá Tarifa' = ```
+			
+			VAR _precio = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C."), "#,##0")
+			VAR _t = [Param Titulo px]
+			VAR _v = [Param Valor px]
+			VAR _s = [Param Subtitulo px]
+			VAR _e = [Param Emoji px]
+			VAR _pv = [Param Padding V]
+			VAR _ph = [Param Padding H]
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.c{font-family:Segoe UI,sans-serif;background:transparent;padding:" & _pv & "px " & _ph & "px}.tp{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.lb{font-size:" & _t & "px;color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.3px}.ic{font-size:" & _e & "px;opacity:.7;filter:grayscale(20%)}.vl{font-size:" & _v & "px;font-weight:800;color:#fff;letter-spacing:-.5px;margin:2px 0}.sn{font-size:" & _s & "px;color:rgba(255,255,255,.6);font-weight:700;margin-top:4px}</style><div class='c'><div class='tp'><div class='lb'>Bogotá Tarifa</div><div class='ic'>💰</div></div><div class='vl'>$" & _precio & "</div><div class='sn'>COP/kWh · OR más caro</div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 087812ee-1b15-4ab6-a33e-ffd03a508afe
+
+	/// 🏆 Tarjeta HTML - Líder Demanda con subtítulo
+	measure 'HTML Card Líder Demanda' = ```
+			
+			VAR _lider = TOPN(1, ALL(Fact_Demanda[Departamento]), CALCULATE(SUM(Fact_Demanda[Demanda_GWh])))
+			VAR _lGWh = MAXX(_lider, CALCULATE(SUM(Fact_Demanda[Demanda_GWh])))
+			VAR _lPct = DIVIDE(_lGWh, CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), ALL(Fact_Demanda[Departamento])), 0) * 100
+			VAR _lNombre = UPPER(MAXX(_lider, Fact_Demanda[Departamento]))
+			VAR _t = [Param Titulo px]
+			VAR _v = [Param Valor px]
+			VAR _s = [Param Subtitulo px]
+			VAR _e = [Param Emoji px]
+			VAR _pv = [Param Padding V]
+			VAR _ph = [Param Padding H]
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.c{font-family:Segoe UI,sans-serif;background:transparent;padding:" & _pv & "px " & _ph & "px}.tp{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.lb{font-size:" & _t & "px;color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.3px}.ic{font-size:" & _e & "px;opacity:.7;filter:grayscale(20%)}.vl{font-size:" & _v & "px;font-weight:800;color:#fff;letter-spacing:-.5px;margin:2px 0}.sn{font-size:" & _s & "px;color:rgba(255,255,255,.6);font-weight:700;margin-top:4px}</style><div class='c'><div class='tp'><div class='lb'>Líder Demanda</div><div class='ic'>🏆</div></div><div class='vl'>" & _lNombre & "</div><div class='sn'>" & FORMAT(_lGWh, "#,##0") & " GWh · " & FORMAT(_lPct, "0.0") & "%</div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 7bd2bb7f-2897-41dc-9924-aa710d0d430b
+
+	/// Tamaño fuente título cards HTML (px)
+	measure 'Param Titulo px' = 25
+		formatString: 0
+		displayFolder: 06. Params HTML
+		lineageTag: 1790af13-fbc2-434f-9c49-0ca537bfccc4
+
+	/// Tamaño fuente valor principal cards HTML (px)
+	measure 'Param Valor px' = 36
+		formatString: 0
+		displayFolder: 06. Params HTML
+		lineageTag: 285009a5-0698-4389-9370-a84a85e4c2dc
+
+	/// Tamaño fuente subtítulo cards HTML (px)
+	measure 'Param Subtitulo px' = 18
+		formatString: 0
+		displayFolder: 06. Params HTML
+		lineageTag: 91ad1c0d-81f8-43b7-85c6-3b97c47d72ed
+
+	/// Tamaño emoji cards HTML (px)
+	measure 'Param Emoji px' = 40
+		formatString: 0
+		displayFolder: 06. Params HTML
+		lineageTag: f47e7cc2-2c0e-4eb6-8a2e-bd1505707d7d
+
+	/// Padding vertical contenedor cards HTML (px)
+	measure 'Param Padding V' = 14
+		formatString: 0
+		displayFolder: 06. Params HTML
+		lineageTag: 8a26951a-d03f-4676-8ff0-77628093190e
+
+	/// Padding horizontal contenedor cards HTML (px)
+	measure 'Param Padding H' = 18
+		formatString: 0
+		displayFolder: 06. Params HTML
+		lineageTag: f1e4d4df-46e4-4bc8-9489-0ae450f8b7e7
+
+	/// 📊 Barra horizontal de 3 insights ejecutivos - valores fijos 2024. Desactivar interacciones de slicers en el visual.
+	measure 'HTML Insights Bar' = ```
+			
+			VAR _pctNR = FORMAT([% No Regulado] * 100, "0.0")
+			VAR _precioBog = FORMAT(
+			    CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			VAR _precioAnt = FORMAT(
+			    CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			VAR _diffPct = FORMAT(
+			    DIVIDE(
+			        CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024)
+			        - CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024),
+			        CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024), 0
+			    ) * 100, "0")
+			VAR _top5 = TOPN(5, ALL(Fact_Demanda[Departamento]), CALCULATE(SUM(Fact_Demanda[Demanda_GWh])))
+			VAR _top5GWh = SUMX(_top5, CALCULATE(SUM(Fact_Demanda[Demanda_GWh])))
+			VAR _top5Pct = FORMAT(DIVIDE(_top5GWh, CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), ALL(Fact_Demanda[Departamento])), 0) * 100, "0.0")
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.bar{display:flex;gap:20px;font-family:Segoe UI,sans-serif;background:#0f172a;padding:12px 20px;border-radius:6px}.item{flex:1;padding:10px 14px;border-left:3px solid;border-radius:0 4px 4px 0}.i1{border-color:#3b82f6;background:rgba(59,130,246,.08)}.i2{border-color:#f59e0b;background:rgba(245,158,11,.08)}.i3{border-color:#10b981;background:rgba(16,185,129,.08)}.txt{font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.5}b{color:#fff;font-weight:700}.em{font-size:14px;margin-right:4px}</style><div class='bar'><div class='item i1'><div class='txt'><span class='em'>🏭</span> El mercado <b>No Regulado domina con el " & _pctNR & "%</b> de la demanda total en 2024, indicando un mercado maduro con alta participación de grandes consumidores industriales y comerciales.</div></div><div class='item i2'><div class='txt'><span class='em'>⚠️</span> <b>Bogotá es el OR más costoso ($" & _precioBog & " COP/kWh)</b>, un " & _diffPct & "% más caro que Antioquia ($" & _precioAnt & "), creando oportunidades de arbitraje y migración de clientes.</div></div><div class='item i3'><div class='txt'><span class='em'>✅</span> Los <b>5 departamentos líderes concentran el " & _top5Pct & "%</b> de la demanda total (Antioquia, Valle del Cauca, Meta, Cundinamarca y Bogotá D.C.).</div></div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: a49e3f8b-dfeb-43c4-b30b-26f578af9447
+
+	/// 📊 Barra de 3 insights para página Demanda
+	measure 'HTML Insights Demanda' = ```
+			
+			VAR _avgLV = CALCULATE(AVERAGE(Fact_Demanda[Demanda_GWh]), Dim_Calendar[Day Number] <= 5)
+			VAR _avgDom = CALCULATE(AVERAGE(Fact_Demanda[Demanda_GWh]), Dim_Calendar[Day Number] = 7)
+			VAR _caida = FORMAT(DIVIDE(_avgLV - _avgDom, _avgLV, 0) * 100, "0")
+			VAR _metaPct = FORMAT(CALCULATE(DIVIDE(CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado]="No Regulado"), SUM(Fact_Demanda[Demanda_GWh]),0) * 100, Fact_Demanda[Departamento]="META"), "0.0")
+			VAR _araucaPct = FORMAT(CALCULATE(DIVIDE(CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado]="No Regulado"), SUM(Fact_Demanda[Demanda_GWh]),0) * 100, Fact_Demanda[Departamento]="ARAUCA"), "0.0")
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.bar{display:flex;gap:20px;font-family:Segoe UI,sans-serif;background:#0f172a;padding:12px 20px;border-radius:6px}.item{flex:1;padding:10px 14px;border-left:3px solid;border-radius:0 4px 4px 0}.i1{border-color:#3b82f6;background:rgba(59,130,246,.08)}.i2{border-color:#f59e0b;background:rgba(245,158,11,.08)}.i3{border-color:#10b981;background:rgba(16,185,129,.08)}.txt{font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.5}b{color:#fff;font-weight:700}.em{font-size:14px;margin-right:4px}</style><div class='bar'><div class='item i1'><div class='txt'><span class='em'>✅</span> <b>Estacionalidad estable:</b> Picos de demanda en Mar y Oct. Junio registra la demanda más baja del año, coincidiendo con menor actividad industrial.</div></div><div class='item i2'><div class='txt'><span class='em'>⚠️</span> <b>Patrón semanal marcado:</b> El consumo cae ~" & _caida & "% los domingos vs. días hábiles, confirmando la dominancia del consumo industrial y comercial en la matriz energética.</div></div><div class='item i3'><div class='txt'><span class='em'>🏭</span> <b>Meta (" & _metaPct & "%) y Arauca (" & _araucaPct & "% No Regulado)</b> sugieren alta concentración en grandes consumidores industriales, posiblemente vinculados al sector petrolero y extractivo.</div></div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 67dfaa91-90b3-49c9-9cfc-93459f4e1877
+
+	measure 'Precio Promedio PY' = CALCULATE([Precio Promedio], SAMEPERIODLASTYEAR(Dim_Calendar[Date]))
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 03. Análisis de Precios
+		lineageTag: 716332bb-4012-4643-9bf4-1fe27edd5427
+
+	/// 🎯 Mercados Prioritarios + Recomendaciones Clave (2 columnas)
+	measure 'HTML Estrategia Top' = ```
+			
+			VAR _pctNR = FORMAT([% No Regulado] * 100, "0.0")
+			VAR _diffPct = FORMAT(
+			    DIVIDE(
+			        CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024)
+			        - CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024),
+			        CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024), 0
+			    ) * 100, "0")
+			VAR _bogMin = FORMAT(CALCULATE(MIN(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			VAR _bogMax = FORMAT(CALCULATE(MAX(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.row{display:flex;gap:20px;font-family:Segoe UI,sans-serif}.col{flex:1;background:#0f172a;border-radius:6px;padding:16px 20px}.hd{font-size:15px;font-weight:700;color:#fff;margin-bottom:12px}.em{margin-right:5px}.tier{font-size:13px;font-weight:700;color:#60a5fa;margin:10px 0 6px}.li{font-size:12px;color:rgba(255,255,255,.8);line-height:1.7;padding-left:8px}.rec{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}.num{min-width:22px;height:22px;border-radius:50%;background:#1e40af;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}.rtx{font-size:12px;color:rgba(255,255,255,.8);line-height:1.5}</style><div class='row'><div class='col'><div class='hd'><span class='em'>🎯</span> Mercados Prioritarios</div><div class='tier'>Tier 1 — Alta demanda + Alto NR:</div><div class='li'>• Antioquia (3.436 GWh, 91,5% NR)</div><div class='li'>• Valle del Cauca (3.393 GWh, 82,5% NR)</div><div class='li'>• Meta (2.947 GWh, 98,6% NR)</div><div class='li'>• Cundinamarca (2.867 GWh, 88,9% NR)</div><div class='tier'>Tier 2 — Oportunidad de crecimiento:</div><div class='li'>• Bogotá D.C. (2.715 GWh, 78,3% NR)</div><div class='li'>• Atlántico (1.771 GWh, 84,2% NR)</div></div><div class='col'><div class='hd'><span class='em'>📋</span> Recomendaciones Clave</div><div class='rec'><div class='num'>1</div><div class='rtx'>Aprovechar diferencial Bogotá vs Antioquia (" & _diffPct & "% más caro) para campañas de migración de clientes No Regulados.</div></div><div class='rec'><div class='num'>2</div><div class='rtx'>Enfocar esfuerzo comercial en segmento No Regulado (" & _pctNR & "%) donde hay libertad de elección de proveedor.</div></div><div class='rec'><div class='num'>3</div><div class='rtx'>Monitorear volatilidad Costa Caribe (Bolívar, Atlántico) como señal de riesgo y oportunidad.</div></div><div class='rec'><div class='num'>4</div><div class='rtx'>Explorar mercados de alta concentración industrial (Meta, Arauca — sector petrolero).</div></div><div class='rec'><div class='num'>5</div><div class='rtx'>Diseñar ofertas con precios estabilizados para captar clientes afectados por la alta volatilidad de Bogotá ($" & _bogMin & "–$" & _bogMax & ").</div></div></div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: cd858422-7967-4c95-b2f0-49b1711417da
+
+	/// 💡 3 insights finales de estrategia (horizontal)
+	measure 'HTML Estrategia Bottom' = ```
+			
+			VAR _bogPctNR = FORMAT(CALCULATE(DIVIDE(CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Tipo_Mercado]="No Regulado"), SUM(Fact_Demanda[Demanda_GWh]),0)*100, Fact_Demanda[Departamento]="BOGOTÁ. D.C."), "0.0")
+			VAR _bogRegGWh = FORMAT(CALCULATE(SUM(Fact_Demanda[Demanda_GWh]), Fact_Demanda[Departamento]="BOGOTÁ. D.C.", Fact_Demanda[Tipo_Mercado]="Regulado"), "#,##0")
+			VAR _antPrecio = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.bar{display:flex;gap:20px;font-family:Segoe UI,sans-serif;background:transparent;padding:0}.item{flex:1;padding:10px 14px;border-left:3px solid;border-radius:0 4px 4px 0;background:#0f172a}.i1{border-color:#3b82f6}.i2{border-color:#10b981}.i3{border-color:#f59e0b}.txt{font-size:12px;color:rgba(255,255,255,.85);line-height:1.5}b{color:#fff;font-weight:700}.em{font-size:13px;margin-right:4px}</style><div class='bar'><div class='item i1'><div class='txt'><span class='em'>💡</span> <b>Oportunidad clave en Bogotá:</b> Con " & _bogPctNR & "% NR (el más bajo entre grandes dptos), ~" & _bogRegGWh & " GWh de mercado Regulado son potencialmente migrables. EnergyConsult puede competir contra el OR más caro del país con contratos atractivos de largo plazo.</div></div><div class='item i2'><div class='txt'><span class='em'>🎯</span> <b>Estrategia de precio:</b> Con Antioquia como benchmark ($" & _antPrecio & "), hay espacio significativo para ofrecer tarifas competitivas donde los ORs cobran >$400 (Bogotá, Bolívar, Cali), capturando grandes consumidores.</div></div><div class='item i3'><div class='txt'><span class='em'>⚠️</span> <b>Gestión de riesgo:</b> La tendencia alcista de precios 2023–2024 podría continuar por efectos climáticos (El Niño) y costos de generación. Una estrategia de cobertura de precios sería un diferenciador clave.</div></div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: f81f8933-15e4-4f40-a874-4ebe7b3cc821
+
+	/// 📊 3 insights para página Precios
+	measure 'HTML Insights Precios' = ```
+			
+			VAR _bolJun = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOLÍVAR", YEAR(Fact_Precios[Fecha])=2023, MONTH(Fact_Precios[Fecha])=6), "#,##0")
+			VAR _atlJun = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ATLÁNTICO", YEAR(Fact_Precios[Fecha])=2023, MONTH(Fact_Precios[Fecha])=6), "#,##0")
+			VAR _bogIni = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2022, MONTH(Fact_Precios[Fecha])=8), "#,##0")
+			VAR _bogProm = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			VAR _bogIncr = FORMAT(DIVIDE(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024) - CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2022, MONTH(Fact_Precios[Fecha])=8), CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2022, MONTH(Fact_Precios[Fecha])=8), 0) * 100, "0")
+			VAR _antProm = FORMAT(CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024), "#,##0")
+			RETURN
+			"<style>*{margin:0;padding:0;box-sizing:border-box}.bar{display:flex;gap:22px;font-family:Segoe UI,sans-serif;padding:10px 0}.item{flex:1;padding:18px 22px;border-left:4px solid;border-radius:0 5px 5px 0;background:rgba(15,23,42,.85)}.i1{border-color:#ef4444}.i2{border-color:#3b82f6}.i3{border-color:#10b981}.txt{font-size:17px;color:rgba(255,255,255,.85);line-height:1.65}b{color:#fff;font-weight:700}.em{font-size:19px;margin-right:5px}</style><div class='bar'><div class='item i1'><div class='txt'><span class='em'>🟠</span> <b>Pico jun-2023:</b> Bolívar ($" & _bolJun & ") y Atlántico ($" & _atlJun & ") — crisis de suministro Costa Caribe por El Niño.</div></div><div class='item i2'><div class='txt'><span class='em'>📈</span> <b>Tendencia alcista:</b> Bogotá pasó de ~$" & _bogIni & " (ago-2022) a ~$" & _bogProm & " en 2024, +" & _bogIncr & "% de incremento.</div></div><div class='item i3'><div class='txt'><span class='em'>✅</span> <b>Antioquia la más competitiva</b> ($" & _antProm & " COP/kWh promedio 2024) — posición ideal para atraer grandes consumidores.</div></div></div>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: 9c424af5-030d-4018-9a83-fb5709616b28
+
+	/// 📊 Volatilidad Min-Max con linear-gradient (compatible HTML Content)
+	measure 'HTML Volatilidad Precios' = ```
+			
+			VAR _gMin = 280 VAR _gMax = 490 VAR _rng = _gMax - _gMin
+			VAR _b1Min = CALCULATE(MIN(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b1Max = CALCULATE(MAX(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b1Avg = CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOGOTÁ. D.C.", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b2Min = CALCULATE(MIN(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOLÍVAR", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b2Max = CALCULATE(MAX(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOLÍVAR", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b2Avg = CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="BOLÍVAR", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b3Min = CALCULATE(MIN(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="VALLE DEL CAUCA", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b3Max = CALCULATE(MAX(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="VALLE DEL CAUCA", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b3Avg = CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="VALLE DEL CAUCA", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b4Min = CALCULATE(MIN(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ATLÁNTICO", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b4Max = CALCULATE(MAX(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ATLÁNTICO", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b4Avg = CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ATLÁNTICO", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b5Min = CALCULATE(MIN(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b5Max = CALCULATE(MAX(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _b5Avg = CALCULATE(AVERAGE(Fact_Precios[Precio_COP_kWh]), Fact_Precios[Operador_Regional]="ANTIOQUIA", YEAR(Fact_Precios[Fecha])=2024)
+			VAR _fn = "<table style='width:100%;border-collapse:collapse;font-family:Segoe UI,sans-serif'><tr><td colspan='3' style='padding:10px 0 16px;font-size:16px;font-weight:700;color:#fff'>Volatilidad de Precios 2024 (Min–Max)</td></tr>"
+			VAR _mkBar = 
+			    "<tr><td style='width:110px;font-size:14px;font-weight:700;color:#ef6461;padding:8px 0'>BOGOTÁ. D.C.</td>" &
+			    "<td style='padding:8px 12px'><div style='width:100%;height:12px;border-radius:6px;background:linear-gradient(to right,#1e293b " & FORMAT(DIVIDE(_b1Min-_gMin,_rng,0)*100,"0") & "%,#ef6461 " & FORMAT(DIVIDE(_b1Min-_gMin,_rng,0)*100,"0") & "%,#ef6461 " & FORMAT(DIVIDE(_b1Max-_gMin,_rng,0)*100,"0") & "%,#1e293b " & FORMAT(DIVIDE(_b1Max-_gMin,_rng,0)*100,"0") & "%)'></div></td>" &
+			    "<td style='width:120px;font-size:13px;color:rgba(255,255,255,.6);text-align:right;padding:8px 0'>$" & FORMAT(_b1Min,"#,##0") & " — $" & FORMAT(_b1Max,"#,##0") & "</td></tr>"
+			VAR _mkBar2 = 
+			    "<tr><td style='width:110px;font-size:14px;font-weight:700;color:#a78bfa;padding:8px 0'>BOLÍVAR</td>" &
+			    "<td style='padding:8px 12px'><div style='width:100%;height:12px;border-radius:6px;background:linear-gradient(to right,#1e293b " & FORMAT(DIVIDE(_b2Min-_gMin,_rng,0)*100,"0") & "%,#a78bfa " & FORMAT(DIVIDE(_b2Min-_gMin,_rng,0)*100,"0") & "%,#a78bfa " & FORMAT(DIVIDE(_b2Max-_gMin,_rng,0)*100,"0") & "%,#1e293b " & FORMAT(DIVIDE(_b2Max-_gMin,_rng,0)*100,"0") & "%)'></div></td>" &
+			    "<td style='width:120px;font-size:13px;color:rgba(255,255,255,.6);text-align:right;padding:8px 0'>$" & FORMAT(_b2Min,"#,##0") & " — $" & FORMAT(_b2Max,"#,##0") & "</td></tr>"
+			VAR _mkBar3 = 
+			    "<tr><td style='width:110px;font-size:14px;font-weight:700;color:#fb923c;padding:8px 0'>VALLE DEL CAUCA</td>" &
+			    "<td style='padding:8px 12px'><div style='width:100%;height:12px;border-radius:6px;background:linear-gradient(to right,#1e293b " & FORMAT(DIVIDE(_b3Min-_gMin,_rng,0)*100,"0") & "%,#fb923c " & FORMAT(DIVIDE(_b3Min-_gMin,_rng,0)*100,"0") & "%,#fb923c " & FORMAT(DIVIDE(_b3Max-_gMin,_rng,0)*100,"0") & "%,#1e293b " & FORMAT(DIVIDE(_b3Max-_gMin,_rng,0)*100,"0") & "%)'></div></td>" &
+			    "<td style='width:120px;font-size:13px;color:rgba(255,255,255,.6);text-align:right;padding:8px 0'>$" & FORMAT(_b3Min,"#,##0") & " — $" & FORMAT(_b3Max,"#,##0") & "</td></tr>"
+			VAR _mkBar4 = 
+			    "<tr><td style='width:110px;font-size:14px;font-weight:700;color:#60a5fa;padding:8px 0'>ATLÁNTICO</td>" &
+			    "<td style='padding:8px 12px'><div style='width:100%;height:12px;border-radius:6px;background:linear-gradient(to right,#1e293b " & FORMAT(DIVIDE(_b4Min-_gMin,_rng,0)*100,"0") & "%,#60a5fa " & FORMAT(DIVIDE(_b4Min-_gMin,_rng,0)*100,"0") & "%,#60a5fa " & FORMAT(DIVIDE(_b4Max-_gMin,_rng,0)*100,"0") & "%,#1e293b " & FORMAT(DIVIDE(_b4Max-_gMin,_rng,0)*100,"0") & "%)'></div></td>" &
+			    "<td style='width:120px;font-size:13px;color:rgba(255,255,255,.6);text-align:right;padding:8px 0'>$" & FORMAT(_b4Min,"#,##0") & " — $" & FORMAT(_b4Max,"#,##0") & "</td></tr>"
+			VAR _mkBar5 = 
+			    "<tr><td style='width:110px;font-size:14px;font-weight:700;color:#5eead4;padding:8px 0'>ANTIOQUIA</td>" &
+			    "<td style='padding:8px 12px'><div style='width:100%;height:12px;border-radius:6px;background:linear-gradient(to right,#1e293b " & FORMAT(DIVIDE(_b5Min-_gMin,_rng,0)*100,"0") & "%,#5eead4 " & FORMAT(DIVIDE(_b5Min-_gMin,_rng,0)*100,"0") & "%,#5eead4 " & FORMAT(DIVIDE(_b5Max-_gMin,_rng,0)*100,"0") & "%,#1e293b " & FORMAT(DIVIDE(_b5Max-_gMin,_rng,0)*100,"0") & "%)'></div></td>" &
+			    "<td style='width:120px;font-size:13px;color:rgba(255,255,255,.6);text-align:right;padding:8px 0'>$" & FORMAT(_b5Min,"#,##0") & " — $" & FORMAT(_b5Max,"#,##0") & "</td></tr>"
+			RETURN _fn & _mkBar & _mkBar2 & _mkBar3 & _mkBar4 & _mkBar5 & "</table>"
+			
+			```
+		displayFolder: 05. HTML Cards
+		lineageTag: f10662a7-d892-42b1-bad2-b0f2b400c0b0
+
+	column Placeholder
+		lineageTag: ee0619a8-fe80-4461-b60d-dce6e2b0a865
+		isNameInferred
+		sourceColumn: [Placeholder]
+
+	partition _Medidas = calculated
+		mode: import
+		source = ROW("Placeholder", 0)
+

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "07764ec46b16cb41dde9",
+  "position": {
+    "x": 335.8303886925795,
+    "y": 1046.5017667844522,
+    "z": 12000,
+    "height": 132.29681978798587,
+    "width": 1548.5512367491165,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "HTML Insights Precios"
+                }
+              },
+              "queryRef": "_Medidas.HTML Insights Precios",
+              "nativeQueryRef": "HTML Insights Precios"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

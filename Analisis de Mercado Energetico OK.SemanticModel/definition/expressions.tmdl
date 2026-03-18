@@ -1,0 +1,42 @@
+expression 'NON REGULATED' =
+		let
+		    Origen = Excel.Workbook(File.Contents("C:\Users\mhraf\Desktop\Backup ASUS Abril 2023\DOCUMENTOS PERSONALES RAFAEL MILANES\Prueba Bia\Prueba_demanda_departamento.xlsx"), null, true),
+		    #"NON REGULATED_Sheet" = Origen{[Item="NON REGULATED",Kind="Sheet"]}[Data],
+		    #"Filas superiores quitadas" = Table.Skip(#"NON REGULATED_Sheet",4),
+		    #"Filas filtradas" = Table.SelectRows(#"Filas superiores quitadas", each ([Column1] <> "NO REGULADO")),
+		    #"Columnas quitadas" = Table.RemoveColumns(#"Filas filtradas",{"Column31", "Column2"}),
+		    #"Encabezados promovidos" = Table.PromoteHeaders(#"Columnas quitadas", [PromoteAllScalars=true]),
+		    #"Otras columnas con anulación de dinamización" = Table.UnpivotOtherColumns(#"Encabezados promovidos", {"Row Labels"}, "Atributo", "Valor"),
+		    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Otras columnas con anulación de dinamización",{{"Row Labels", "Fecha"}, {"Atributo", "Departamento"}, {"Valor", "Demanda_GWh"}}),
+		    #"Personalizada agregada" = Table.AddColumn(#"Columnas con nombre cambiado", "Tipo_Mercado", each "No Regulado"),
+		    #"Tipo cambiado" = Table.TransformColumnTypes(#"Personalizada agregada",{{"Tipo_Mercado", type text}, {"Fecha", type date}, {"Demanda_GWh", type number}})
+		in
+		    #"Tipo cambiado"
+	lineageTag: d8a9fe5f-cdbb-4fb1-8c3d-e700fbe35821
+	queryGroup: Demanda
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+
+expression REGULATED =
+		let
+		    Origen = Excel.Workbook(File.Contents("C:\Users\mhraf\Desktop\Backup ASUS Abril 2023\DOCUMENTOS PERSONALES RAFAEL MILANES\Prueba Bia\Prueba_demanda_departamento.xlsx"), null, true),
+		    REGULATED_Sheet = Origen{[Item="REGULATED",Kind="Sheet"]}[Data],
+		    #"Filas superiores quitadas" = Table.Skip(REGULATED_Sheet,4),
+		    #"Filas filtradas" = Table.SelectRows(#"Filas superiores quitadas", each ([Column1] <> "Grand Total" and [Column1] <> "REGULADO")),
+		    #"Columnas quitadas" = Table.RemoveColumns(#"Filas filtradas",{"Column2", "Column31"}),
+		    #"Encabezados promovidos" = Table.PromoteHeaders(#"Columnas quitadas", [PromoteAllScalars=true]),
+		    #"Otras columnas con anulación de dinamización" = Table.UnpivotOtherColumns(#"Encabezados promovidos", {"Row Labels"}, "Atributo", "Valor"),
+		    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Otras columnas con anulación de dinamización",{{"Row Labels", "Fecha"}, {"Atributo", "Departamento"}, {"Valor", "Demanda_GWh"}}),
+		    #"Personalizada agregada" = Table.AddColumn(#"Columnas con nombre cambiado", "Tipo_Mercado", each "Regulado"),
+		    #"Tipo cambiado" = Table.TransformColumnTypes(#"Personalizada agregada",{{"Fecha", type date}, {"Demanda_GWh", type number}, {"Tipo_Mercado", type text}})
+		in
+		    #"Tipo cambiado"
+	lineageTag: 63c2a8ca-ecf4-4b30-a77f-09a38f366ccc
+	queryGroup: Demanda
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

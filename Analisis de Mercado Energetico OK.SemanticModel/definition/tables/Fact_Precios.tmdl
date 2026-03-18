@@ -1,0 +1,106 @@
+table Fact_Precios
+	lineageTag: e257bab6-af3d-4bf4-9269-3e1c8f0dda59
+
+	column Fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 18da5110-bee5-499a-91e6-fc3202b09121
+		summarizeBy: none
+		sourceColumn: Fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Operador_Regional
+		dataType: string
+		lineageTag: 0d2e3ebb-c3d5-4bef-bd12-89737c3a393f
+		summarizeBy: none
+		sourceColumn: Operador_Regional
+
+		annotation SummarizationSetBy = Automatic
+
+	column Precio_COP_kWh
+		dataType: double
+		lineageTag: 621b4a4d-e608-4064-ad51-d6efc0444b99
+		summarizeBy: sum
+		sourceColumn: Precio_COP_kWh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Fact_Precios","TableItemName":"Precio_COP_kWh (ubicaciones)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column Capital = RELATED(Dim_Departamento[Capital])
+		lineageTag: e9139eda-988f-4cc4-bef0-8e1a09585afb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Precio_COP_kWh (ubicaciones)' =
+			IF(
+				ISBLANK('Fact_Precios'[Precio_COP_kWh]),
+				BLANK(),
+				IF(
+					'Fact_Precios'[Precio_COP_kWh] >= 0,
+					ROUNDDOWN('Fact_Precios'[Precio_COP_kWh] / 62.68545454545454, 0) * 62.68545454545454,
+					ROUNDUP('Fact_Precios'[Precio_COP_kWh] / 62.68545454545454, 0) * 62.68545454545454
+				)
+			)
+		lineageTag: 17f824d3-6a82-4fac-a8cc-7e9237a41a98
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Fact_Precios"
+				          }
+				        },
+				        "Property": "Precio_COP_kWh"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 62.68545454545454,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"f","Entity":"Fact_Precios"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"f"}},"Property":"Precio_COP_kWh"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"f"}},"Property":"Precio_COP_kWh"}},"Size":62.68545454545454}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fact_Precios = m
+		mode: import
+		queryGroup: Precios
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("C:\Users\mhraf\Desktop\Backup ASUS Abril 2023\DOCUMENTOS PERSONALES RAFAEL MILANES\Prueba Bia\Prueba_Target Market Pricing_BI.xlsx"), null, true),
+				    #"Query result_Sheet" = Origen{[Item="Query result",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"Query result_Sheet", [PromoteAllScalars=true]),
+				    #"Filas filtradas" = Table.SelectRows(#"Encabezados promovidos", each [start_date] <> null and [start_date] <> ""),
+				    #"Otras columnas con anulación de dinamización" = Table.UnpivotOtherColumns(#"Filas filtradas", {"start_date"}, "Atributo", "Valor"),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Otras columnas con anulación de dinamización",{{"Atributo", "Operador_Regional"}, {"Valor", "Precio_COP_kWh"}, {"start_date", "Fecha"}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Columnas con nombre cambiado",{{"Fecha", type date}, {"Precio_COP_kWh", type number}}),
+				    #"Valor reemplazado" = Table.ReplaceValue(#"Tipo cambiado","atlantico","ATLÁNTICO",Replacer.ReplaceText,{"Operador_Regional"}),
+				    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado","bogota_cundinamarca","BOGOTÁ. D.C.",Replacer.ReplaceText,{"Operador_Regional"}),
+				    #"Valor reemplazado2" = Table.ReplaceValue(#"Valor reemplazado1","antioquia","ANTIOQUIA",Replacer.ReplaceText,{"Operador_Regional"}),
+				    #"Valor reemplazado3" = Table.ReplaceValue(#"Valor reemplazado2","bolivar","BOLÍVAR",Replacer.ReplaceText,{"Operador_Regional"}),
+				    #"Valor reemplazado4" = Table.ReplaceValue(#"Valor reemplazado3","cali","VALLE DEL CAUCA",Replacer.ReplaceText,{"Operador_Regional"})
+				in
+				    #"Valor reemplazado4"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

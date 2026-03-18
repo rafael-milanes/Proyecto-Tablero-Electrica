@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "4bfe3d6bda627551a05b",
+  "position": {
+    "x": 1274.6341463414633,
+    "y": 137.5609756097561,
+    "z": 4000,
+    "height": 190.2439024390244,
+    "width": 276.58536585365852,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "HTML Card Bogotá Tarifa"
+                }
+              },
+              "queryRef": "_Medidas.HTML Card Bogotá Tarifa",
+              "nativeQueryRef": "HTML Card Bogotá Tarifa"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
